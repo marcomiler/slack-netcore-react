@@ -1,11 +1,13 @@
+using MediatR;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Persistence;
+using Application.Channels;
 
 namespace API
 {
@@ -27,7 +29,21 @@ namespace API
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             }); 
             
+            //agregadon CORS
+            //definimos en este caso el origin desde el cual consumiremos los recursos de nuestra API
+            services.AddCors( opt => {
+                opt.AddPolicy("CorsPolicy", 
+                    policy => {
+                        policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://localhost:3000");
+                    }
+                );
+            });
 
+            //servicio MediatR
+            services.AddMediatR( typeof(List.Handler).Assembly );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,12 +52,12 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                // app.UseSwagger();
-                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

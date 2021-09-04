@@ -1,9 +1,11 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Persistence;
-using SQLitePCL;
+using System.Collections.Generic;
+
+using Domain;
+using MediatR;
+using Application.Channels;
 
 namespace API.Controllers
 {
@@ -11,26 +13,32 @@ namespace API.Controllers
     [ApiController]
     public class ChannelsController : ControllerBase
     {
-        private DataContext _context;
+        private IMediator _mediator;
 
-        public ChannelsController(DataContext context)
+        public ChannelsController(IMediator mediator)
         {
-            _context = context ?? throw new ArgumentNullException( nameof(context) );
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-        public IActionResult Get()
-        {
-            var channels = _context.Channels.ToList();
 
-            return Ok( channels );
+        [HttpGet]
+        public async Task<ActionResult<List<Channel>>> List()
+        {
+            return await _mediator.Send(new List.Query());
         }
+
 
         [HttpGet("{id}")]
-        public IActionResult Get( Guid id )
+        public async Task<ActionResult<Channel>> Details( Guid id )
         {
-            var channels = _context.Channels.FirstOrDefault( x => x.id == id );
-            return Ok( channels );
+            return await _mediator.Send( new Details.Query { id = id } );
         }
 
-        
+        [HttpPost]
+        public async Task<Unit> Create( [FromBody] Create.Command command ) //[FromBody] es opcional colocarlo
+        {
+            return await _mediator.Send( command );
+        }
+
+
     }
 }

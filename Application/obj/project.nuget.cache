@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "OhKrcHoJwG9KuwQzecr24YI9di+qLbg2GfNhQ0Ve5bTj/TaIITFdO/bHMHWgrS39HrnQA8qUogL0bMUSu7JS+A==",
+  "dgSpecHash": "EBI+fUPhQjPN5wJpIrAR6EUWZcoPme4UnauHxeucIi324uu1ZHDDexQL2D7lzzOPC6TgV+PkbXSeFkVB89dA/Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.data.sqlite.core\\5.0.9\\microsoft.data.sqlite.core.5.0.9.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\3.1.6\\microsoft.dotnet.platformabstractions.3.1.6.nupkg.sha512",

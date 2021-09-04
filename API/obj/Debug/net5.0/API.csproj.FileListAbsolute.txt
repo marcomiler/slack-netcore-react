@@ -56,3 +56,5 @@ C:\Users\user\Desktop\udemy\net-core\slack\API\obj\Debug\net5.0\API.dll
 C:\Users\user\Desktop\udemy\net-core\slack\API\obj\Debug\net5.0\ref\API.dll
 C:\Users\user\Desktop\udemy\net-core\slack\API\obj\Debug\net5.0\API.pdb
 C:\Users\user\Desktop\udemy\net-core\slack\API\obj\Debug\net5.0\API.genruntimeconfig.cache
+C:\Users\user\Desktop\udemy\net-core\slack\API\bin\Debug\net5.0\MediatR.dll
+C:\Users\user\Desktop\udemy\net-core\slack\API\bin\Debug\net5.0\MediatR.Extensions.Microsoft.DependencyInjection.dll

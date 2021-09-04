@@ -1,4 +1,0 @@
-{
-    "omnisharp.disableMSBuildDiagnosticWarning": true,
-    "omnisharp.enableMsBuildLoadProjectsOnDemand": true
-}
