@@ -1,12 +1,15 @@
 using MediatR;
-using Microsoft.Extensions.Hosting;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Domain;
 using Persistence;
+using API.Middleware;
 using Application.Channels;
 
 namespace API
@@ -24,16 +27,24 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services.AddDbContext<DataContext>( x => {  
+            services
+                .AddControllers()
+                .AddFluentValidation(cfg => {
+                    cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+                });
+
+            services.AddDbContext<DataContext>(x =>
+            {
                 x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            }); 
-            
+            });
+
             //agregadon CORS
             //definimos en este caso el origin desde el cual consumiremos los recursos de nuestra API
-            services.AddCors( opt => {
-                opt.AddPolicy("CorsPolicy", 
-                    policy => {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy",
+                    policy =>
+                    {
                         policy
                         .AllowAnyHeader()
                         .AllowAnyMethod()
@@ -43,17 +54,27 @@ namespace API
             });
 
             //servicio MediatR
-            services.AddMediatR( typeof(List.Handler).Assembly );
+            services.AddMediatR(typeof(List.Handler).Assembly);
+
+            //servicio identity
+            var builder = services.AddIdentityCore<AppUser>();
+            //crear instancia de IdentityBuilder
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseMiddleware<ErrorHandlingMiddleware>();//usando nuestro middleware
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
