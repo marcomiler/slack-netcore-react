@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj": {}
+    "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj": {
+    "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj",
+        "projectUniqueName": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj",
+        "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\obj\\",
+        "outputPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj"
+              "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
+                "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj"
+              "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj": {
+                "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj"
               }
             }
           }
@@ -47,6 +47,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[9.5.4, )"
+            },
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[9.0.0, )"
@@ -71,14 +75,14 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
+    "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj",
+        "projectUniqueName": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj",
+        "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\obj\\",
+        "outputPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -106,6 +110,12 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -125,14 +135,14 @@
         }
       }
     },
-    "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj": {
+    "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj",
+        "projectUniqueName": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj",
         "projectName": "Persistence",
-        "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj",
+        "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\Persistence.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\obj\\",
+        "outputPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Persistence\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -149,8 +159,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj"
+              "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj": {
+                "projectPath": "c:\\Users\\user\\Desktop\\udemy\\net-core\\slack\\Domain\\Domain.csproj"
               }
             }
           }

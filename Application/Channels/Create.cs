@@ -1,9 +1,11 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Domain;
 using MediatR;
 using Persistence;
+using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
+
+using Domain;
 
 namespace Application.Channels
 {
@@ -14,6 +16,16 @@ namespace Application.Channels
             public Guid id { get; set; }
             public string name { get; set; }
             public string description { get; set; } 
+        }
+
+        //Fluent Validation: debe unicarse entre el command y el handler
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.name).NotEmpty().NotNull();
+                RuleFor(x => x.description).NotEmpty().NotNull();
+            }
         }
 
         //solo necesitamos un request

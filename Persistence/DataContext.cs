@@ -1,11 +1,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Domain;
 
 namespace Persistence
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         
         public DataContext(DbContextOptions options) : base(options)
@@ -17,6 +18,8 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating( modelBuilder ); //importante para que la migracion nos genere un nuevo id
+            
             modelBuilder
                 .Entity<Channel>()
                 .HasData( new Channel{

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Domain;
 using Persistence;
+using Application.Errors;
+using System.Net;
 
 namespace Application.Channels
 {
@@ -26,6 +28,8 @@ namespace Application.Channels
             }
             public async Task<List<Channel>> Handle(Query request, CancellationToken cancellationToken)
             {
+                // throw new RestException( HttpStatusCode.NotFound, new { channel = "Not found" } );
+                // throw new Exception("SERVER ERROR");
                 //CancellationToken lo usamos cuando cancelamos pedidos en nuestra api, en esta ocasion no la usaremos
                 return await _context.Channels.ToListAsync(cancellationToken);
             }
