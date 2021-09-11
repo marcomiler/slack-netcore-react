@@ -1,13 +1,13 @@
 using MediatR;
+using System.Net;
 using FluentValidation;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 using Domain;
-using Microsoft.AspNetCore.Identity;
-using System;
 using Application.Errors;
-using System.Net;
+using Application.Interfaces;
 
 namespace Application.User
 {
@@ -32,12 +32,16 @@ namespace Application.User
         {
             private readonly UserManager<AppUser> UserManager;
             private readonly SignInManager<AppUser> SignInManager;
+            public readonly IJwtGenerator JwtGenerator;
             
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+                            IJwtGenerator jwtGenerator)
             {
-                this.UserManager = userManager;
-                this.SignInManager = signInManager;
+                UserManager = userManager;
+                SignInManager = signInManager;
+                JwtGenerator = jwtGenerator;
             }
+
 
             public async Task<User> Handle(Query request, CancellationToken cancellationToken)
             {
@@ -49,9 +53,8 @@ namespace Application.User
 
                 var result = await SignInManager.CheckPasswordSignInAsync( user, request.Password, false );
                 if(result.Succeeded){
-                    //TODO: generate token
                     return new User{
-                        Token = "This will be token",
+                        Token = JwtGenerator.CreateToken( user ),
                         UserName = user.UserName,
                         Email = user.Email
                     };

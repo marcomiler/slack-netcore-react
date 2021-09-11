@@ -1,16 +1,23 @@
 using MediatR;
+using System.Text;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 using Domain;
 using Persistence;
 using API.Middleware;
 using Application.Channels;
+using Application.Interfaces;
+using Infrastructure.Security;
 
 namespace API
 {
@@ -28,7 +35,15 @@ namespace API
         {
 
             services
-                .AddControllers()
+                .AddControllers(
+                //authorizamos de manera global el uso del token, de lo contrario lo hacemos en los controllers y aqui quitamos los argumentos
+                opt => 
+                {
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                    opt.Filters.Add( new AuthorizeFilter( policy ));
+                })
                 .AddFluentValidation(cfg => {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
@@ -63,8 +78,29 @@ namespace API
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddAuthentication();
-            
+            //el key debe ser el mismo q creamos
+            // var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes( "This is the secret key" ));
+
+            //usando user-secrets:
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes( Configuration["TokenKey"] ));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
+                .AddJwtBearer(
+                    opt => 
+                    {
+                        opt.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = key,
+                            ValidateAudience = false,
+                            ValidateIssuer = false
+                        };
+                    }
+                );
+
+            //registramos nuestras interfaces
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccesor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,11 +110,11 @@ namespace API
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
