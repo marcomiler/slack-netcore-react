@@ -10,13 +10,13 @@ namespace Application.User
 {
     public class CurrentUser
     {
-        public class Query : IRequest<User>
+        public class Query : IRequest<UserDto>
         {
             // public string UserName { get; set; }
             // public string Token { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, User>
+        public class Handler : IRequestHandler<Query, UserDto>
         {
             private readonly IUserAccessor userAccessor;
             private readonly UserManager<AppUser> userManager;
@@ -29,11 +29,11 @@ namespace Application.User
 
             }
 
-            public async Task<User> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await userManager.FindByNameAsync( userAccessor.GetCurrentUserName() );
 
-                return new User
+                return new UserDto
                 {
                     UserName = user.UserName,
                     Token = jwtGenerator.CreateToken( user )

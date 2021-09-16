@@ -13,7 +13,7 @@ namespace Application.User
 {
     public class Register
     {
-        public class Command : IRequest<User>
+        public class Command : IRequest<UserDto>
         {
             //definir propiedades a ingresar
             public string UserName { get; set; }
@@ -46,7 +46,7 @@ namespace Application.User
             }
         }
 
-        public class Handler : IRequestHandler<Command, User>
+        public class Handler : IRequestHandler<Command, UserDto>
         {
             public readonly UserManager<AppUser> UserManager;
             public readonly IJwtGenerator JwtGenerator;
@@ -56,7 +56,7 @@ namespace Application.User
                 UserManager = userManager;
 
             }
-            public async Task<User> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = new AppUser
                 {
@@ -68,7 +68,7 @@ namespace Application.User
 
                 if (result.Succeeded)
                 {
-                    return new User
+                    return new UserDto
                     {
                         Email = user.Email,
                         UserName = user.UserName,

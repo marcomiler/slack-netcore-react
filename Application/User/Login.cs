@@ -13,7 +13,7 @@ namespace Application.User
 {
     public class Login
     {
-        public class Query : IRequest<User> 
+        public class Query : IRequest<UserDto> 
         {
             public string Email { get; set; }
             public string Password { get; set; }
@@ -28,7 +28,7 @@ namespace Application.User
             }
         }
 
-        public class Handler : IRequestHandler<Query, User>
+        public class Handler : IRequestHandler<Query, UserDto>
         {
             private readonly UserManager<AppUser> UserManager;
             private readonly SignInManager<AppUser> SignInManager;
@@ -43,7 +43,7 @@ namespace Application.User
             }
 
 
-            public async Task<User> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 //verificar q el usuario exista en la bd
                 var user = await UserManager.FindByEmailAsync( request.Email );
@@ -53,7 +53,7 @@ namespace Application.User
 
                 var result = await SignInManager.CheckPasswordSignInAsync( user, request.Password, false );
                 if(result.Succeeded){
-                    return new User{
+                    return new UserDto{
                         Token = JwtGenerator.CreateToken( user ),
                         UserName = user.UserName,
                         Email = user.Email

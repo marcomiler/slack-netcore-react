@@ -15,6 +15,7 @@ namespace Persistence
         }
 
         public DbSet<Channel> Channels { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,12 @@ namespace Persistence
                     name = "ReactJs",
                     description = "Canal dedicado a ReactJs"
                 });
+                
+            //definimos las relaciones de nuestras tablas y creamos una nueva migration
+            modelBuilder.Entity<Message>()
+                .HasOne(x => x.Sender)
+                .WithMany(x => x.Messages)
+                .HasForeignKey(x => x.SenderId);
         }
         
     }
